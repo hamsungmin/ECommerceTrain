@@ -7,7 +7,7 @@ public class LowestPriceController {
     private LowerstPriceService lowestPriceService;
 
     @GetMaping("/getZSETValue")
-    public Set GetZsetValue (Stinrg key){
+    public Set getZsetValue (Stinrg key){
         return lowestPriceService.getZsetValue(key);
     }
 }

@@ -7,8 +7,13 @@ import org.springframework.stereotype.Service;
 
 @service
 public class LowerPriceServiceImpl implements LowerPriceService {
-    public Set GetZsetValue(String key){
+    @Autowired
+    private RedisTemplate myProdPriceRedis;
+
+    
+    public Set getZsetValue(String key){
         Set myTempSet  new HashSet<>();
+        myTempSet = myProdPriceRedis.opsForZSet().rageWithScores(key, 0, 9);
         return myTempSet;
 
     }

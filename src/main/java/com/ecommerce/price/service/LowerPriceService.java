@@ -2,6 +2,6 @@ package com.ecommerce.price.service;
 
 import java.util.Set;
 
-public class LowerPriceService {
-    Set getZsetValue(String key);
+public interface LowerPriceService {
+    Set GetZsetValue(String key);
 }

@@ -3,12 +3,14 @@ package com.ecommerce.price.controller;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.ecommerce.price.service.LowerPriceService;
 import com.ecommerce.price.vo.Keyword;
@@ -24,6 +26,16 @@ public class LowestPriceController {
     @GetMapping("/product")
     public Set getZsetValue (@RequestParam("key") String key){
         return lowestPriceService.GetZsetValue(key);
+    }
+    @GetMapping("/product1")
+    public Set GetZsetValueWithStatus (String key){
+        try {
+            return lowestPriceService.GetZsetValue(key);
+        }
+        catch (Exception ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, ex.getMessage(), ex);
+        }
     }
     
     @PutMapping("/product")

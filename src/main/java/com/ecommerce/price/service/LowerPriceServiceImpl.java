@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.price.vo.Product;
+
 @Service
 public class LowerPriceServiceImpl implements LowerPriceService {
     @Autowired
@@ -16,6 +18,14 @@ public class LowerPriceServiceImpl implements LowerPriceService {
         Set myTempSet = new HashSet();
         myTempSet = myProdPriceRedis.opsForZSet().rangeWithScores(key, 0, 9);
         return myTempSet;
-    };
+    }
+
+	@Override
+	public int setNewProduct(Product newProduct) {
+		int rank = 0;
+		myProdPriceRedis.opsForZSet().add(newProduct.getProdGrpId(), newProduct.getProductId(), newProduct.getPrice());
+		rank = myProdPriceRedis.opsForZSet().rank(newProduct.getProdGrpId(), newProduct.getProductId()).intValue();
+		return rank;
+	};
 
 }

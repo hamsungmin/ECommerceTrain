@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.price.service.LowerPriceService;
+import com.ecommerce.price.vo.Keyword;
 import com.ecommerce.price.vo.Product;
+import com.ecommerce.price.vo.ProductGrp;
 
 @RestController
 @RequestMapping("/api")
@@ -28,4 +30,21 @@ public class LowestPriceController {
     public int setNewProduct(@RequestBody Product newProduct){
         return lowestPriceService.setNewProduct(newProduct);
     }
+    
+    @PutMapping("/productGroup")
+    public int setNewProductGroup(@RequestBody ProductGrp newProductGrp){
+        return lowestPriceService.setNewProductGrp(newProductGrp);
+    }
+    
+    @PutMapping("/productGroupToKeyword")
+    public int setNewProductGrpToKeyword(@RequestParam("keyworkd") String keyword, @RequestParam("productGrpId") String productGrpId, @RequestParam("score") double score){
+        return lowestPriceService.setNewProductGrpToKeyword(keyword,productGrpId, score);
+    }
+    
+    @GetMapping("/productPrice/lowest")
+    public Keyword getLowestPriceProductByKeyword(String keyword) {
+    	return lowestPriceService.getLowestPriceProductByKeyword(keyword);
+    }
+    	
+    
 }
